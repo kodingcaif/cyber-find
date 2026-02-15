@@ -781,7 +781,13 @@ class CyberFind:
                         }
             except asyncio.TimeoutError:
                 if attempt == max_retries - 1:
-                    return {"success": False, "error": "Timeout"}
+                    # Extract site name from URL for better error message
+                    site_name = site.get("name", url.split("/")[2] if "/" in url else "site")
+                    timeout_value = site.get("timeout", self.config["general"]["timeout"])
+                    return {
+                        "success": False,
+                        "error": f"⚠️ Request timed out for {site_name}. Try increasing timeout with `--timeout {timeout_value + 10}`."
+                    }
                 await asyncio.sleep(self.config["general"]["retry_delay"])
             except Exception as e:
                 if attempt == max_retries - 1:
