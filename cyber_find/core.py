@@ -786,7 +786,7 @@ class CyberFind:
                     timeout_value = site.get("timeout", self.config["general"]["timeout"])
                     return {
                         "success": False,
-                        "error": f"⚠️ Request timed out for {site_name}. Try increasing timeout with `--timeout {timeout_value + 10}`."
+                        "error": f"⚠️ Request timed out for {site_name}. Try increasing timeout with `--timeout {timeout_value + 10}`.",
                     }
                 await asyncio.sleep(self.config["general"]["retry_delay"])
             except Exception as e:
